@@ -1,12 +1,12 @@
 class Bike
 
+
 	def broken?
-		broken = false
+		false
 	end
 
 	def break!
-	broken = true
-	self
+		true
 	end
 
 
