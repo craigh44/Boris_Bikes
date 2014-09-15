@@ -2,13 +2,16 @@ class Bike
 
 
 	def broken?
-		false
+		@broken
 	end
 
 	def break!
-		true
+		@broken = true
 	end
 
+	def fix!()
+		@broken = false
+	end
 
 
 end
