@@ -1,40 +1,52 @@
 module BikeContainer
 
-	DEFAULT_CAPACITY = 10
+  DEFAULT_CAPACITY = 10
 
-	def bikes
-		@bikes ||= []
-	end
 
-	def capacity 
-		@capacity ||= DEFAULT_CAPACITY
-	end
+  def full_error_message
+    'Station is full'
+  end
+  
+  def bikes
+    @bikes ||= []
+  end
 
-	def capacity=(value)
-		@capacity = value 
-	end
+  def capacity    
+    @capacity ||= DEFAULT_CAPACITY
+  end
 
-	def bike_count
-		bikes.count
-	end
+  def capacity=(value)    
+    @capacity = value
+  end
 
-	def dock(bike)
-		raise "station is full" if full?
-		bikes << bike
-	end
+  def bike_count
+    bikes.count
+  end
 
-	def release(bike)
-		bikes.delete(bike)
-	end
+  def dock(bike)
+    raise full_error_message if full?
+    raise "That is not a bike" unless bike.class == Bike
+    bikes << bike
+  end
 
-	def full?
-		bike_count == capacity
-	end
+  def release(bike)
+    raise "You can only release a bike" unless bike.class == Bike
+    bikes.delete(bike)
+  end
 
-	def available_bikes
-		bikes.reject {|bike| bike.broken? }
-		
-	end
+  def full?
+    bike_count == capacity
+  end
 
+  def empty?
+    bike_count == 0
+  end
+
+  def available_bikes
+  bikes.reject {|bike| bike.broken? }
+  end
+
+  def unavailable_bikes
+  bikes.reject {|bike| !bike.broken? }
 end
-
+end
