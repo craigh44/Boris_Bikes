@@ -10,4 +10,8 @@ describe Garage do
 		expect(garage.capacity).to eq(44)
 	end
 	
+	it "should fix bikes as it recieves them" do 
+		
+	end
+
 end

@@ -1,18 +1,17 @@
 require 'bike_container'
-require "bike"
+
 
 class ContainerHolder; include BikeContainer; end
 
 describe BikeContainer do
 
-  let(:bike) { Bike.new }
-  let(:holder) { ContainerHolder.new }
-  let(:station) {DockingStation.new}
+  let(:bike)    { double :bike, :class => Bike }
+  let(:station) { double :station, :class => DockingStation}
+  let(:holder)  { ContainerHolder.new } 
+
 
   it "should accept a bike" do        
-    expect(holder.bike_count).to eq(0)
-    holder.dock(bike)    
-    expect(holder.bike_count).to eq(1)
+    expect{holder.dock(bike)}.to change{holder.bike_count}.by 1    
   end
 
   it "should not release a bike if it is empty" do
@@ -31,17 +30,17 @@ describe BikeContainer do
   it "should provide a list of available bikes" do 
     working_bike, broken_bike = Bike.new, Bike.new    
     broken_bike.break!
-    station.dock(working_bike)
-    station.dock(broken_bike)
-    expect(station.available_bikes).to eq([working_bike])
+    holder.dock(working_bike)
+    holder.dock(broken_bike)
+    expect(holder.available_bikes).to eq([working_bike])
   end
 
   it "should provide a list of unavailable bikes" do 
     working_bike, broken_bike = Bike.new, Bike.new    
     broken_bike.break!
-    station.dock(working_bike)
-    station.dock(broken_bike)
-    expect(station.unavailable_bikes).to eq([broken_bike])
+    holder.dock(working_bike)
+    holder.dock(broken_bike)
+    expect(holder.unavailable_bikes).to eq([broken_bike])
   end
 
 end
